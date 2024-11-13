@@ -9,8 +9,16 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <div id="app">Hello, world!</div>
-    <button type="button">이건 버튼임</button>
+    <main>
+      <form id="todo-insert" class="input-form">
+        <label>
+          <p>할일 입력</p>
+          <input type="text" placeholder="할일을 입력하세요." required />
+        </label>
+        <button class="todo-submit-button">추가</button>
+      </form>
+      <todo-list></todo-list>
+    </main>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
