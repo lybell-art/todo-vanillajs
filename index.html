@@ -26,6 +26,13 @@
       <button type="button" class="todo-button" data-value="completed">완료</button>
       <button type="button" class="todo-button" data-value="incompleted">미완료</button>
     </template>
+    <template id="todo-item-template">
+      <label>
+        <input type="checkbox" aria-label="완료 여부"/>
+        <p class="detail"></p>
+      </label>
+      <button type="button" class="delete-button todo-button">삭제</button>
+    </template>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 import TodoFilter from "./todo-filter.js";
-//import TodoItem from "./todo-item.js";
+import TodoItem from "./todo-item.js";
 
 class TodoList extends HTMLElement
 {
@@ -13,8 +13,14 @@ class TodoList extends HTMLElement
 		this.addEventListener("change-filter", ({detail})=>{
 			this.filter = detail;
 		});
+		this.addEventListener("update-item", ({detail})=>{
+			this.data = this.#data.map( (item)=>{
+				if(item.id === detail.id) return {...item, ...detail};
+				return item;
+			} );
+		});
 		this.addEventListener("remove-item", ({detail})=>{
-			this.data = this.#data.filter( ({id})=>id !== detail );
+			this.data = this.#data.filter( ({id})=>id !== +detail );
 		});
 	}
 	get filter()
@@ -66,9 +72,7 @@ class TodoList extends HTMLElement
 				if(this.filter === "incompleted") return !completed;
 				return true;
 			} ).map( data=>{
-				const div = document.createElement("div");
-				div.textContent = data.value;
-				return div;
+				return new TodoItem(data);
 			} );
 
 		this.$listRenderer.innerHTML = "";
