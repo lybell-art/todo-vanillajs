@@ -1,43 +1,80 @@
-const todoTemplate = document.getElementById("todo-list-template");
+import TodoFilter from "./todo-filter.js";
+//import TodoItem from "./todo-item.js";
 
 class TodoList extends HTMLElement
 {
+	#filter = "all";
+	#data = [];
+	$filterer = null;
+	$listRenderer = null;
 	constructor()
 	{
 		super();
-		this.filter = "all";
-
 		this.addEventListener("change-filter", ({detail})=>{
 			this.filter = detail;
-			console.log(detail);
 		});
+		this.addEventListener("remove-item", ({detail})=>{
+			this.data = this.#data.filter( ({id})=>id !== detail );
+		});
+	}
+	get filter()
+	{
+		return this.#filter;
+	}
+	set filter(value)
+	{
+		const oldFilter = this.#filter;
+		if(["all", "completed", "incompleted"].includes(value)) {
+			this.#filter = value;
+		}
+		else this.#filter = "all";
+		if(oldFilter !== this.#filter) this.render();
+	}
+	get data()
+	{
+		return [...this.#data];
+	}
+	set data(value)
+	{
+		if(!Array.isArray(value)) return;
+		if(this.#data === value) return;
+		this.#data = value;
+		this.render();
 	}
 	connectedCallback()
 	{
-		const template = todoTemplate.content.cloneNode(true);
-		initializeFilterElem(template.querySelector(".todo-list-filter"));
+		if(this.hasChildNodes()) return;
+		this.$filterer = new TodoFilter();
+		this.$listRenderer = document.createElement("div");
 
-		this.append(template);
+		this.appendChild(this.$filterer);
+		this.appendChild(this.$listRenderer);
 	}
-}
+	appendItem(value)
+	{
+		this.data = [...this.#data, {value, completed: false, id: Math.random()}];
+	}
+	render()
+	{
+		if(this.$filterer === null || this.$listRenderer === null) return;
 
-function initializeFilterElem($elem)
-{
-	const buttons = $elem.querySelectorAll("button");
-	let prevValue = "all";
-	$elem.addEventListener("click", ({target})=>{
-		if(target == null) return;
-		const value = target.dataset.value;
-		if(value === undefined) return;
+		this.$filterer.setAttribute("value", this.filter);
+		const filteredList = this.data
+			.filter( ({completed})=>{
+				if(this.filter === "completed") return completed;
+				if(this.filter === "incompleted") return !completed;
+				return true;
+			} ).map( data=>{
+				const div = document.createElement("div");
+				div.textContent = data.value;
+				return div;
+			} );
 
-		buttons.forEach( $button => {
-			$button.classList.toggle("selected", $button === target);
-		} );
-		if(prevValue !== value) {
-			$elem.dispatchEvent(new CustomEvent("change-filter", {detail: value, bubbles: true}));
-			prevValue = value;
-		}
-	})
+		this.$listRenderer.innerHTML = "";
+		const frag = new DocumentFragment();
+		filteredList.forEach( ($el)=>frag.append($el) );
+		this.$listRenderer.append(frag);
+	}
 }
 
 customElements.define("todo-list", TodoList);

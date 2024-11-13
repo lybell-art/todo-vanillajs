@@ -110,21 +110,21 @@ form:invalid .todo-submit-button {
   background-color: var(--gray);
 }
 
-.todo-list-filter {
+todo-filter {
   height: 32px;
   display: flex;
   gap: 16px;
 }
 
-.todo-list-filter > .todo-button {
+todo-filter > .todo-button {
   width: 80px;
   background-color: var(--gray);
 }
 
-.todo-list-filter > .todo-button.selected {
+todo-filter > .todo-button.selected {
   background-color: var(--primary);
 }
 
-.todo-list-filter > .todo-button:hover, .todo-list-filter > .todo-button:focus-visible {
+todo-filter > .todo-button:hover, todo-filter > .todo-button:focus-visible {
   background-color: var(--primary-2);
 }

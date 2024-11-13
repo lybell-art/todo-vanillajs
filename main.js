@@ -8,6 +8,6 @@ $todoInsertForm.addEventListener("submit", (e)=>{
 	e.preventDefault();
 	if(!$todoInput.value) return;
 
-	console.log($todoInput.value);
+	$todoList.appendItem($todoInput.value);
 	$todoInput.value = "";
 });
