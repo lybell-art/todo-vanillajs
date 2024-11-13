@@ -11,3 +11,13 @@ $todoInsertForm.addEventListener("submit", (e)=>{
 	$todoList.appendItem($todoInput.value);
 	$todoInput.value = "";
 });
+
+$todoList.addEventListener("change-data", (e)=>{
+	localStorage.setItem("todo-vanilla-data", JSON.stringify(e.target.data));
+});
+try {
+	$todoList.data = JSON.parse(localStorage.getItem("todo-vanilla-data"));
+}
+catch {
+	localStorage.removeItem("todo-vanilla-data");
+}

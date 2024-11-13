@@ -14,7 +14,6 @@ class TodoFilter extends HTMLElement
 		if(this.hasChildNodes()) return;
 
 		const elem = filterTemplate.content.cloneNode(true);
-		console.log(elem.querySelectorAll("button"));
 		this.buttons = elem.querySelectorAll("button");
 		this.addEventListener("click", ({target})=>{
 			if(target === "null") return;

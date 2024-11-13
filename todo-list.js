@@ -39,6 +39,7 @@ class TodoList extends HTMLElement
 		if(!Array.isArray(value)) return;
 		if(this.#data === value) return;
 		this.#data = value;
+		this.dispatchEvent(new Event("change-data"));
 		this.render();
 	}
 	connectedCallback()
