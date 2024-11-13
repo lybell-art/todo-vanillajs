@@ -15,10 +15,21 @@
           <p>할일 입력</p>
           <input type="text" placeholder="할일을 입력하세요." required />
         </label>
-        <button class="todo-submit-button">추가</button>
+        <button class="todo-button todo-submit-button">추가</button>
       </form>
+
       <todo-list></todo-list>
     </main>
+
+    <template id="todo-list-template">
+      <div class="todo-list-filter">
+        <button type="button" class="todo-filter-all todo-button selected">전체</button>
+        <button type="button" class="todo-filter-comp todo-button">완료</button>
+        <button type="button" class="todo-filter-incomp todo-button">미완료</button>
+      </div>
+      <div class="todo-list-wrapper">
+      </div>
+    </template>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

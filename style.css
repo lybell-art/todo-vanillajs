@@ -14,6 +14,10 @@
   --black: #202020;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html, body, p {
   margin: 0;
   padding: 0;
@@ -37,12 +41,15 @@ button:disabled, form:invalid button {
   pointer-events: none;
 }
 
-
 main {
   width: 100%;
   padding: 32px 0px;
   max-width: 640px;
 }
+
+/***
+ * input form
+ **/
 
 .input-form {
   width: 100%;
@@ -51,20 +58,20 @@ main {
   gap: 16px;
 }
 
-label {
+.input-form > label {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-label > p {
+.input-form > label > p {
   padding: 0px 12px;
   font-size: 0.8rem;
   color: var(--gray);
 }
 
-label:focus-within > p {
+.input-form > label:focus-within > p {
   color: var(--primary);
   font-weight: bold;
 }
@@ -83,16 +90,19 @@ input[type=text]:focus {
   border: 2px solid var(--primary);
 }
 
+.todo-button {
+  color: white;
+  border-radius: 4px;
+}
+
 .todo-submit-button {
   width: 80px;
   height: 40px;
   background-color: var(--primary);
-  color: white;
-  border-radius: 4px;
   font-size: 1.125rem;
 }
 
-.todo-submit-button:hover, .todo-submit-button:focus {
+.todo-submit-button:hover, .todo-submit-button:focus-visible {
   background-color: var(--primary-2);
 }
 
@@ -100,6 +110,21 @@ form:invalid .todo-submit-button {
   background-color: var(--gray);
 }
 
-* {
-  box-sizing: border-box;
+.todo-list-filter {
+  height: 32px;
+  display: flex;
+  gap: 16px;
+}
+
+.todo-list-filter > .todo-button {
+  width: 80px;
+  background-color: var(--gray);
+}
+
+.todo-list-filter > .todo-button.selected {
+  background-color: var(--primary);
+}
+
+.todo-list-filter > .todo-button:hover, .todo-list-filter > .todo-button:focus-visible {
+  background-color: var(--primary-2);
 }
