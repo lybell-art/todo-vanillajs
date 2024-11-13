@@ -1,3 +1,5 @@
+import "./todo-list.js";
+
 const $todoInsertForm = document.getElementById("todo-insert");
 const $todoList = document.querySelector("todo-list");
 const $todoInput = $todoInsertForm.querySelector("input");
