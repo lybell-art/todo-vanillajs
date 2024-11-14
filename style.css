@@ -12,6 +12,8 @@
   --primary: #c31c3c;
   --primary-2: #8F142B;
   --black: #202020;
+  --red: #EF4444;
+  --red-2: #B91C1C;
 }
 
 * {
@@ -188,6 +190,7 @@ todo-item label{
 todo-item input[type=checkbox] {
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 
 todo-item input[type=checkbox]:checked + .detail {
@@ -201,5 +204,10 @@ todo-item .detail {
 
 todo-item .delete-button {
   width: 80px;
-  background-color: red;
+  background-color: var(--red);
+}
+
+todo-item .delete-button:hover, todo-item .delete-button:focus-visible {
+  width: 80px;
+  background-color: var(--red-2);
 }
