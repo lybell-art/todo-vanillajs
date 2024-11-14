@@ -58,7 +58,7 @@ class TodoItem extends HTMLElement
 			this.$detail.textContent = newValue;
 		}
 		if(name === "completed") {
-			if(newValue === undefined) this.$checkbox.checked = true;
+			if(newValue === null) this.$checkbox.checked = false;
 			else this.$checkbox.checked = true;
 		}
 	}

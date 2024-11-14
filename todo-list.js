@@ -1,9 +1,11 @@
 import TodoFilter from "./todo-filter.js";
 import TodoItem from "./todo-item.js";
+import diffing from "./diffing.js";
 
 class TodoList extends HTMLElement
 {
 	#filter = "all";
+	#prevRendered = [];
 	#data = [];
 	$filterer = null;
 	$listRenderer = null;
@@ -66,19 +68,36 @@ class TodoList extends HTMLElement
 		if(this.$filterer === null || this.$listRenderer === null) return;
 
 		this.$filterer.setAttribute("value", this.filter);
+
 		const filteredList = this.data
 			.filter( ({completed})=>{
 				if(this.filter === "completed") return completed;
 				if(this.filter === "incompleted") return !completed;
 				return true;
-			} ).map( data=>{
-				return new TodoItem(data);
 			} );
 
-		this.$listRenderer.innerHTML = "";
-		const frag = new DocumentFragment();
-		filteredList.forEach( ($el)=>frag.append($el) );
-		this.$listRenderer.append(frag);
+		// diffing
+		const diffCommands = diffing(this.#prevRendered, filteredList);
+
+		const oldChildren = [...this.$listRenderer.children];
+		for(let diffCommand of diffCommands)
+		{
+			switch(diffCommand.command)
+			{
+				case "delete":
+					oldChildren[diffCommand.index].remove();
+					break;
+				case "add":
+					this.$listRenderer.insertBefore(new TodoItem(diffCommand.to), oldChildren[diffCommand.index] ?? null);
+					break;
+				case "modify":
+					oldChildren[diffCommand.index].value = diffCommand.to.value;
+					oldChildren[diffCommand.index].completed = diffCommand.to.completed;
+					break;
+			}
+		}
+
+		this.#prevRendered = filteredList;
 	}
 }
 
