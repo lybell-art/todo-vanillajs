@@ -172,6 +172,10 @@ todo-list > div {
   gap: 8px;
 }
 
+/***
+ * todo list item
+ **/
+
 todo-item {
   display: flex;
   justify-content: center;
